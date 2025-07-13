@@ -151,4 +151,10 @@ describe('updateUser', ()=> {
         });
     });
 
+});
+
+describe('deleteUser', () => {
+    it('la función debe estar definida', () => {
+        expect(deleteUser).toBeDefined();
+    })
 })
