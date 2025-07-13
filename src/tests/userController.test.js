@@ -1,6 +1,6 @@
 import { describe, expect, it, vi, beforeEach } from "vitest";
 import { User } from "../models/user.model.js";
-import { createUser } from "../controllers/user.controller.js";
+import { createUser, getUserById } from "../controllers/user.controller.js";
 
 vi.mock('../models/user.model.js', () => ({
   User: {
