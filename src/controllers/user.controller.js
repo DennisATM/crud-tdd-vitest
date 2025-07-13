@@ -18,6 +18,23 @@ export const createUser = async (req, res)=>{
     }
 }
 
-export const getUserById= async (req, res) =>{
+export const getUserById = async (req, res) =>{
+    try {
+        const userId = Number(req.params.id);
+        
+        const user = await User.findByPk(Number(userId));
 
+        res.status(200).json({
+            message: 'Usuario obtenido con éxito',
+            status:200,
+            data: user
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            message:'Error al obtener el usuario',
+            status:500,
+            data: null
+        })
+    }
 }

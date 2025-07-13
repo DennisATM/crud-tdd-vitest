@@ -4,7 +4,8 @@ import { createUser, getUserById } from "../controllers/user.controller.js";
 
 vi.mock('../models/user.model.js', () => ({
   User: {
-    create: vi.fn()
+    create: vi.fn(),
+    findByPk: vi.fn()
   }
 }));
 
@@ -76,7 +77,37 @@ describe('createUser', () => {
 });
 
 describe('getUserById',()=> {
+    beforeEach(()=> {
+        vi.clearAllMocks();
+    })
+
     it('debería estar definida la función', () =>{
         expect(getUserById).toBeDefined(); 
+    }),
+    it('debería obtener un usuario por Id y devolver 200', async () => {
+        const mockUser = {
+            id:1,
+            firstName:'Dennis',
+            lastName:'Torres',
+            email:'dennis@example.com',
+            password:'123456'
+        }
+
+        User.findByPk.mockResolvedValue(mockUser);
+        const req = {params: { id: 1 }};
+        const res = {
+            status: vi.fn().mockReturnThis(),
+            json: vi.fn()
+        }
+
+        await getUserById(req, res);
+
+        expect(User.findByPk).toHaveBeenCalledWith(1);
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.json).toHaveBeenCalledWith({
+            message: 'Usuario obtenido con éxito',
+            status: 200,
+            data: mockUser
+        })
     })
 })
