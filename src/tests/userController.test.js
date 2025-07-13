@@ -74,3 +74,9 @@ describe('createUser', () => {
     });
   });
 });
+
+describe('getUserById',()=> {
+    it('debería estar definida la función', () =>{
+        expect(getUserById).toBeDefined(); 
+    })
+})
