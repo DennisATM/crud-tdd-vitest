@@ -6,7 +6,8 @@ vi.mock('../models/user.model.js', () => ({
   User: {
     create: vi.fn(),
     findByPk: vi.fn(),
-    update: vi.fn()
+    update: vi.fn(),
+    destroy: vi.fn()
   }
 }));
 
@@ -154,7 +155,30 @@ describe('updateUser', ()=> {
 });
 
 describe('deleteUser', () => {
+    beforeEach(() => {
+        vi.clearAllMocks();
+    })
+
     it('la función debe estar definida', () => {
         expect(deleteUser).toBeDefined();
     })
+
+    it('debería eliminar un usuario y devolver status 200', async () => {
+        User.destroy.mockResolvedValue(1); // Sequelize devuelve 1 si borra
+
+        const req = { params: { id: '1' } };
+        const res = {
+            status: vi.fn().mockReturnThis(),
+            json: vi.fn()
+        };
+
+        await deleteUser(req, res);
+
+        expect(User.destroy).toHaveBeenCalledWith({ where: { id: 1 } });
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.json).toHaveBeenCalledWith({
+            message: 'Usuario eliminado con éxito',
+            status: 200
+        });
+    });
 })
