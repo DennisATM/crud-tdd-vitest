@@ -1,11 +1,12 @@
 import { describe, expect, it, vi, beforeEach } from "vitest";
 import { User } from "../models/user.model.js";
-import { createUser, getUserById } from "../controllers/user.controller.js";
+import { createUser, getUserById, updateUser } from "../controllers/user.controller.js";
 
 vi.mock('../models/user.model.js', () => ({
   User: {
     create: vi.fn(),
-    findByPk: vi.fn()
+    findByPk: vi.fn(),
+    update: vi.fn()
   }
 }));
 
@@ -113,7 +114,41 @@ describe('getUserById',()=> {
 });
 
 describe('updateUser', ()=> {
+
+    beforeEach(() => {
+        vi.clearAllMocks();    
+    })
+
     it('la función debe estar definida', () => {
         expect(updateUser).toBeDefined();
     })
+
+    it('debería actualizar un usuario y devolver status 200', async () => {
+        const mockUpdateData = {
+            firstName: 'NuevoNombre',
+            lastName: 'ApellidoActualizado',
+        };
+
+        const req = {
+            params: { id: '1' },
+            body: mockUpdateData
+        };
+
+        const res = {
+            status: vi.fn().mockReturnThis(),
+            json: vi.fn()
+        };
+
+        User.update.mockResolvedValue([1]); // Sequelize devuelve [1] si actualizó 1 registro
+
+        await updateUser(req, res);
+
+        expect(User.update).toHaveBeenCalledWith(mockUpdateData, { where: { id: 1 } });
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.json).toHaveBeenCalledWith({
+            message: 'Usuario actualizado con éxito',
+            status: 200
+        });
+    });
+
 })

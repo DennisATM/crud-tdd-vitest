@@ -38,3 +38,28 @@ export const getUserById = async (req, res) =>{
         })
     }
 }
+
+export const updateUser = async (req, res) => {
+    try {
+        const idUser = Number(req.params.id);
+
+        const updateData = req.body;
+
+        const user = await User.update(updateData, {
+            where: { id : idUser}
+        })
+
+        res.status(200).json({
+            message: "Usuario actualizado con éxito",
+            status: 200,
+        });
+
+    } catch (error) {
+
+        res.status(404).json({
+            message: "Usuario no encontrado",
+            status: 404,
+            data: null,
+        });
+    }
+}
