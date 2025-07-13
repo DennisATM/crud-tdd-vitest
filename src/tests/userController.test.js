@@ -110,4 +110,10 @@ describe('getUserById',()=> {
             data: mockUser
         })
     })
+});
+
+describe('updateUser', ()=> {
+    it('la función debe estar definida', () => {
+        expect(updateUser).toBeDefined();
+    })
 })
