@@ -1,4 +1,4 @@
-readme_content = """# 🧪 CRUD API con Node.js + Sequelize + Vitest (TDD)
+🧪 CRUD API con Node.js + Sequelize + Vitest (TDD)
 
 Este proyecto implementa un CRUD de usuarios utilizando Node.js, Express y Sequelize, siguiendo el enfoque de **Desarrollo Guiado por Pruebas (TDD)** con **Vitest** como framework de testing.
 
