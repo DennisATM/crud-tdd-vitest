@@ -48,7 +48,7 @@ Se crearon ramas independientes para cada etapa:
 
 📂 Instalación
 
-    git clone https://github.com/tu-usuario/crud-tdd-vitest.git
+    git clone https://github.com/DennisATM/crud-tdd-vitest.git
     cd crud-tdd-vitest
     npm install
 
